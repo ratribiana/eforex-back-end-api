@@ -14,12 +14,7 @@ const response = ( status, data, res ) => {
 app.get( '/', async ( req, res ) => {
 	console.log(req.useragent);
 	console.log(req.session);
-	var ip = req.headers['x-forwarded-for'] ||
-         req.connection.remoteAddress ||
-         req.socket.remoteAddress ||
-         req.connection.socket.remoteAddress
-				 console.log(ip)
-	console.log(req.ip)
+  console.log(process.env)
 	try {
     const result = await getExchangeRate()
 		response( 200, result, res )

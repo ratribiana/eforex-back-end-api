@@ -12,12 +12,12 @@ dbConnect( config )
 updateExchangeRate()
 
 const serverUp = ( app ) => {
-	const server = app.listen( config.port )
+	const server = app.listen( process.env.PORT || config.port )
 	process.on( 'unhandledRejection', ( reason, p ) =>
 		logger.error( 'Unhandled Rejection at: Promise ', p, reason )
 	)
 	server.on( 'listening', () =>
-		logger.info( 'Node-Feathers application started on http://%s:%d', config.host,  config.port )
+		logger.info( 'Node-Feathers application started on http://%s:%d', config.host,  process.env.PORT || config.port )
 	)
 }
 serverUp( app )

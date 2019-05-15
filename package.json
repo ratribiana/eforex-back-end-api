@@ -16,6 +16,7 @@
     "npm": ">= 3.0.0"
   },
   "scripts": {
+    "heroku-prebuild": "npm install",
     "build": "npm run clean && babel -d ./build ./src -s && mkdirp ./build/public/files",
     "clean": "rm -rf build && mkdir build",
     "clearDB": "babel-node src/clearDB.js --exec",

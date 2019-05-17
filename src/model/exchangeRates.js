@@ -61,7 +61,7 @@ export class ExchangeRateClass{
     const result = rates.map(function(rate){
       newRates.push({
         base: rate.base,
-        countryCode: rate.CountryCode,
+        countryCode: rate.countryCode,
         rates: rate.rates
       })
     })

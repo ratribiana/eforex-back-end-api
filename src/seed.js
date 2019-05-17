@@ -17,7 +17,7 @@ import {states} from 'seeds/phState.seed.js'
 	if ( config.env=='development' || config.env == 'test' ) {
 		await siteStatus()
 		await countries()
-		await states()		
+		await states()
 		await users( 2 )
 		await merchants( 2 )
 	}

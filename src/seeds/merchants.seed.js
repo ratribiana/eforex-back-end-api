@@ -58,9 +58,9 @@ export const merchants = async ( length ) => {
         address: {
           addressLine1: faker.address.streetAddress(),
           addressLine2: faker.address.secondaryAddress(),
-          city: faker.address.city(),
-          state: faker.address.state(),
-          country: faker.address.county(),
+          city: 'pasig' || faker.address.city(),
+          state: 'metro manila' || faker.address.state(),
+          country: 'philippines' || faker.address.county(),
           zipCode: faker.address.zipCode()
         }
       }

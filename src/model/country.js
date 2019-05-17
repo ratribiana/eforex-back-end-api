@@ -20,23 +20,61 @@ const schema = new Schema({
 	},
 	phoneCode: {
 		type      : String,
-		required  : true,
 		index     : true,
-		searchable: true
+		searchable: true,
+		default   : ''
 	},
 	isoCode: {
 		type      : String,
 		required  : true,
 		index     : true,
-		searchable: true
+		searchable: true,
+		default   : ''
+	},
+	capital: {
+		type      : String,
+		searchable: true,
+		default   : ''
+	},
+	region: {
+		type      : String,
+		searchable: true,
+		default   : ''
+	},
+	timezones: {
+		type      : String,
+		searchable: true,
+		default   : ''
+	},
+	currencyCode: {
+		type      : String,
+		required  : true,
+		index     : true,
+		searchable: true,
+	},
+	currencyName: {
+		type      : String,
+		required  : true,
+		index     : true,
+		searchable: true,
+		default   : ''
 	},
 	isActive: {
 		type   : Boolean,
 		default: true
+	},
+	isDeleted: {
+		type   : Boolean,
+		default: false
 	}
 })
 
 export class CountryClass {
+	static async createCountry ( country ) {
+		console.log(country)
+		const created = await this.create( country )
+		return created
+	}
 	static getCountries () {
 		return this.find({isActive: true}).sort({name: 'asc'}).exec()
 	}

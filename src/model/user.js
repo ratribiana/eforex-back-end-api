@@ -164,12 +164,12 @@ const schema = new Schema({
 	IDType: {
 		type    : String,
 		default : '',
-		required: true
+		searchable: true
 	},
 	IDNumber: {
 		type    : String,
 		default : '',
-		required: true
+		searchable: true
 	},
 	security: {
 		secret: {

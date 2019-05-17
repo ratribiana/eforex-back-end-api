@@ -7,6 +7,7 @@ import config from '../config'
 import mongoose from 'mongoose'
 import {dbConnect} from 'utils/dbConnector'
 import {updateExchangeRate} from 'utils/exchangeRateCron'
+import {newCountries} from 'utils/getCountries'
 
 dbConnect( config )
 updateExchangeRate()

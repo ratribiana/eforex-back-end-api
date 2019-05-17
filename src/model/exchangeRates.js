@@ -13,8 +13,13 @@ const schema = new Schema({
     required: true,
     default : ''
   },
+  countryCode: {
+    type: String,
+    required: true,
+    default : ''
+  },
   rates: {
-    type: Object,
+    type: Array,
     required: true,
     default: []
   },
@@ -41,7 +46,8 @@ export class ExchangeRateClass{
      { "base" : rates.base },
      { $set: {
           "rates" : rates.rates,
-          "date"  : rates.date
+          "date"  : rates.date,
+          "countryCode": rates.countryCode
         } },
      { upsert: true }
     )

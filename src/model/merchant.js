@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import config from '../../config'
 
 mongoose.set('useFindAndModify', false);
+const ObjectID = require( 'mongodb' ).ObjectID
 
 const {Schema} = mongoose
 
@@ -113,6 +114,14 @@ export class merchantClass{
 	static async findByMerchantCode ( merchantCode ) {
 		return this.findOne({merchantCode}).exec()
 	}
+
+  static async updateMerchant ( merchantID, merchant ) {
+    return this.findOneAndUpdate(
+      { _id: new ObjectID(merchantID ) },
+      { $set: merchant }
+     )
+  }
+
 }
 schema.loadClass( merchantClass )
 export const castMerchantId = ( userId ) => mongoose.Types.ObjectId( merchantId )

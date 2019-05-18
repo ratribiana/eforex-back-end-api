@@ -13,7 +13,7 @@ import fakerator from 'fakerator'
 
 const app = express( feathers() )
 
-const register = ( res, status, data ) => {
+const transact = ( res, status, data ) => {
 	res.status( status ).send( JSON.stringify( data ) )
 }
 
@@ -32,38 +32,38 @@ app.post( '/guest', async ( req, res ) => {
 	try {
 
     if ( /^\s+$/.test( registerGuestUser.email ) ) {
-			return register( res, 400, {error: 'error_no_email_provided'})
+			return transact( res, 400, {error: 'error_no_email_provided'})
 		} else if (/^\s+$/.test( registerGuestUser.mobile ) ) {
-			return register( res, 400, {error: 'error_no_mobile_provided'})
+			return transact( res, 400, {error: 'error_no_mobile_provided'})
 		} else if (/^\s+$/.test( registerGuestUser.IDType ) ) {
-			return register( res, 400, {error: 'error_no_id_type_provided'})
+			return transact( res, 400, {error: 'error_no_id_type_provided'})
 		} else if (/^\s+$/.test( registerGuestUser.IDNumber ) ) {
-			return register( res, 400, {error: 'error_no_id_number_provided'})
+			return transact( res, 400, {error: 'error_no_id_number_provided'})
 		}
 
     if (/^\s+$/.test( newGuestTransaction.merchantCode ) ) {
-			return register( res, 400, {error: 'error_no_merchantCode_provided'})
+			return transact( res, 400, {error: 'error_no_merchantCode_provided'})
 		} else if (/^\s+$/.test( newGuestTransaction.amount ) ) {
-			return register( res, 400, {error: 'error_no_amount_provided'})
+			return transact( res, 400, {error: 'error_no_amount_provided'})
     } else if (/^\s+$/.test( newGuestTransaction.baseCurrency ) ) {
-			return register( res, 400, {error: 'error_no_baseCurrency_provided'})
+			return transact( res, 400, {error: 'error_no_baseCurrency_provided'})
     } else if (/^\s+$/.test( newGuestTransaction.convertedAmount ) ) {
-			return register( res, 400, {error: 'error_no_convertedAmount_provided'})
+			return transact( res, 400, {error: 'error_no_convertedAmount_provided'})
     } else if (/^\s+$/.test( newGuestTransaction.convertToCurrency ) ) {
-			return register( res, 400, {error: 'error_no_convertToCurrency_provided'})
+			return transact( res, 400, {error: 'error_no_convertToCurrency_provided'})
     } else if (/^\s+$/.test( newGuestTransaction.exchangeRate ) ) {
-			return register( res, 400, {error: 'error_no_exchangeRate_provided'})
+			return transact( res, 400, {error: 'error_no_exchangeRate_provided'})
     }
 
 		ifEmailExist = await user.findOne({email: registerGuestUser.email}).countDocuments()
     ifMobileExist = await user.findOne({mobile: registerGuestUser.mobile}).countDocuments()
 
     if ( ifEmailExist ) {
-			return register( res, 400, {error: 'error_user_email_already_exist'})
+			return transact( res, 400, {error: 'error_user_email_already_exist'})
 		}
 
     if ( ifMobileExist ) {
-			return register( res, 400, {error: 'error_user_mobile_already_exist'})
+			return transact( res, 400, {error: 'error_user_mobile_already_exist'})
 		}
 
 		const newUser = await user.register( registerGuestUser )
@@ -79,14 +79,14 @@ app.post( '/guest', async ( req, res ) => {
     const newTransaction = await transaction.createTransaction( newGuestTransaction )
 
     if (newUser && newTransaction) {
-      register( res, 200, {success: true, message: 'Guest Booking and Registration Success'})
+      transact( res, 200, {success: true, message: 'Guest Booking and Registration Success'})
     } else {
-      register( res, 400, {error: 'error_saving_data', code: e.code})
+      transact( res, 400, {error: 'error_saving_data', code: e.code})
   		logger( e )
     }
 
 	} catch ( e ) {
-		register( res, 400, {error: 'error_saving_data', code: e.code})
+		transact( res, 400, {error: 'error_saving_data', code: e.code})
 		logger( e )
 	}
 })

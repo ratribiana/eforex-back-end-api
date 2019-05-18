@@ -13,7 +13,6 @@ const response = ( status, data, res ) => {
 }
 
 app.get( '/', async ( req, res ) => {
-	console.log('test')
 	try {
 		const result = await country.getCountries()
 		var countries = []

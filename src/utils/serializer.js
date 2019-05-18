@@ -78,6 +78,25 @@ export const transactionSerializer = ( transaction ) => ({
   exchangeRate      : transaction.exchangeRate
 })
 
+export const merchantSerializer = ( merchant ) => ({
+	merchantCode	  : merchant.merchantCode,
+	// userID		      : merchant.userID || '',
+	merchantName		: merchant.merchantName,
+	address: {
+		addressLine1  : merchant.address && merchant.address.addressLine1,
+		addressLine2  : merchant.address && merchant.address.addressLine2 || '',
+		zipCode       : merchant.address && merchant.address.zipCode,
+		country       : merchant.address && merchant.address.country,
+		state         : merchant.address && merchant.address.state,
+		city          : merchant.address && merchant.address.city
+	},
+	countryCode     : merchant.countryCode,
+	stateCode       : merchant.stateCode,
+	cityCode        : merchant.cityCode,
+	// parentMerchant	: merchant.parentMerchant || '',
+	// adminCreatedBy  : merchant.created_by || ''
+})
+
 export const walletSerializer = ( wallet ) => ({
 	balance					: wallet.balance,
 	walletAddress		: wallet.walletAddress,

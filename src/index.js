@@ -10,7 +10,8 @@ import {updateExchangeRate} from 'utils/exchangeRateCron'
 import {newCountries} from 'utils/getCountries'
 
 dbConnect( config )
-updateExchangeRate()
+// updateExchangeRate()
+// newCountries()
 
 const serverUp = ( app ) => {
 	const server = app.listen( process.env.PORT || config.port )

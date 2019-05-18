@@ -18,7 +18,7 @@ const schema = new Schema({
   userID: {
     type: Schema.ObjectId,
     searchable: true,
-    ref : 'Users'
+    ref : 'Users',
   },
   merchantName: {
     type    : String,
@@ -53,15 +53,29 @@ const schema = new Schema({
 			type      : String,
 			index     : true,
 			searchable: true,
+      lowercase : true,
 			default   : ''
 		},
 		city: {
 			type      : String,
 			index     : true,
 			searchable: true,
+      lowercase : true,
 			default   : ''
 		}
   }),
+  countryCode: {
+    type      : String,
+    searchable: true
+  },
+  stateCode: {
+    type      : String,
+    searchable: true
+  },
+  cityCode: {
+    type      : String,
+    searchable: true
+  },
   branches:  [{
   	type: Schema.ObjectId,
   	ref : 'Merchants'
@@ -103,12 +117,54 @@ export class merchantClass{
 		return created
 	}
 
+  static async getMerchants ( skip = 0 , limit = 0 ) {
+    var query = [
+        {$skip: parseInt(skip)},
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'userID',
+            foreignField: '_id',
+            as: 'user'
+          }
+        }
+      ]
+
+      if (limit > 0) {
+        query.push({$limit: parseInt(skip) + parseInt(limit)})
+      }
+
+    const merchants = await this.aggregate(query)
+		return  merchants
+	}
+
+  static async getMerchant ( merchantID ) {
+    var query = [
+        {
+          $match: {
+            _id: new ObjectID(merchantID)
+          }
+        },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'userID',
+            foreignField: '_id',
+            as: 'user'
+          }
+        }
+      ]
+
+    const merchant = await this.aggregate(query)
+		return  merchant
+	}
+
   static async findByMerchantByLocation ( location ) {
     return this.find(location).sort({merchantName: 'asc'}).exec()
   }
 
   static async findByMerchantID ( merchantID ) {
-		return this.find({merchantID}).exec()
+		return this.findById(merchantID)
 	}
 
 	static async findByMerchantCode ( merchantCode ) {
@@ -117,7 +173,7 @@ export class merchantClass{
 
   static async updateMerchant ( merchantID, merchant ) {
     return this.findOneAndUpdate(
-      { _id: new ObjectID(merchantID ) },
+      { _id: new ObjectID( merchantID ) },
       { $set: merchant }
      )
   }

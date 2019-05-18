@@ -35,12 +35,12 @@ export class DocumentTypesClass {
 
 	static async getDocumentTypesLocal ( ) {
  		const idTypes = [
-			{ idCode: PASSPORT, idType:'Passport', validIn: 'Philippines'}
-			{ idCode: DRVRLS, idType:'Driver’s License', validIn: 'Philippines'}
-			{ idCode: UMID, idType:'SSS Umid ID', validIn: 'Philippines'}
-			{ idCode: SSSID, idType:'SSS ID', validIn: 'Philippines'}
-			{ idCode: TINID, idType:'TIN ID', validIn: 'Philippines'}
-			{ idCode: OFWID, idType:'OFW ID', validIn: 'Philippines'}
+			{ idCode: 'PASSPORT', idType:'Passport', validIn: 'Philippines'},
+			{ idCode: 'DRVRLS', idType:'Driver’s License', validIn: 'Philippines'},
+			{ idCode: 'UMID', idType:'SSS Umid ID', validIn: 'Philippines'},
+			{ idCode: 'SSSID', idType:'SSS ID', validIn: 'Philippines'},
+			{ idCode: 'TINID', idType:'TIN ID', validIn: 'Philippines'},
+			{ idCode: 'OFWID', idType:'OFW ID', validIn: 'Philippines'},
 		]
 
     return idTypes

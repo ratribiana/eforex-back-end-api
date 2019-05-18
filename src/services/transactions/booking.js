@@ -6,9 +6,10 @@ import config from '../../../config'
 import {logger} from 'utils/logger'
 import {user} from 'model/user'
 import {transaction} from 'model/transactions'
+import {merchant} from 'model/merchant'
 import {merchantCount} from 'model/merchantCount'
 import {formatTransactionID, getIPAddress} from 'utils/functions'
-
+import fakerator from 'fakerator'
 
 const app = express( feathers() )
 
@@ -21,6 +22,8 @@ app.post( '/guest', async ( req, res ) => {
   var clientIP = req.clientIp
 	var ifEmailExist = false
   var ifMobileExist = false
+
+	req.body.user.username = fakerator().internet.userName(req.body.user.firstname, req.body.user.lastname)
 
   const registerGuestUser = registerGuestSerializer(req.body.user)
 	const newGuestTransaction = transactionSerializer( transactions )
@@ -38,8 +41,8 @@ app.post( '/guest', async ( req, res ) => {
 			return register( res, 400, {error: 'error_no_id_number_provided'})
 		}
 
-    if (/^\s+$/.test( newGuestTransaction.merchantID ) ) {
-			return register( res, 400, {error: 'error_no_merchantID_provided'})
+    if (/^\s+$/.test( newGuestTransaction.merchantCode ) ) {
+			return register( res, 400, {error: 'error_no_merchantCode_provided'})
 		} else if (/^\s+$/.test( newGuestTransaction.amount ) ) {
 			return register( res, 400, {error: 'error_no_amount_provided'})
     } else if (/^\s+$/.test( newGuestTransaction.baseCurrency ) ) {
@@ -64,10 +67,11 @@ app.post( '/guest', async ( req, res ) => {
 		}
 
 		const newUser = await user.register( registerGuestUser )
-
+		const merchantInfo = await merchant.findByMerchantCode({merchantCode: newGuestTransaction.merchantCode})
     const lastMerchantCount = await transaction.getTransactionCount()
     const transactionID = await formatTransactionID(transactions.merchantCode, lastMerchantCount)
 
+		newGuestTransaction.merchantID = merchantInfo._id
     newGuestTransaction.userID = newUser
     newGuestTransaction.transactionID = transactionID.toUpperCase()
     newGuestTransaction.ipAddress = clientIP == '::1' ? ipAddress : clientIP
@@ -75,7 +79,7 @@ app.post( '/guest', async ( req, res ) => {
     const newTransaction = await transaction.createTransaction( newGuestTransaction )
 
     if (newUser && newTransaction) {
-      register( res, 200, {message: 'Registration Success'})
+      register( res, 200, {success: true, message: 'Guest Booking and Registration Success'})
     } else {
       register( res, 400, {error: 'error_saving_data', code: e.code})
   		logger( e )

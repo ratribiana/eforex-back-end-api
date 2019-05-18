@@ -52,6 +52,18 @@ const schema = new Schema({
     default: 0.000000000,
     required: true
   },
+  IDType: {
+		type    : String,
+		default : '',
+    required: true,
+		searchable: true
+	},
+	IDNumber: {
+		type    : String,
+		default : '',
+    required: true,
+		searchable: true
+	},
   isDeleted: {
     type   : Boolean,
 		default: false
@@ -108,7 +120,7 @@ export class TransactionClass{
       if (limit > 0) {
         query.push({$limit: parseInt(skip) + parseInt(limit)})
       }
-      
+
     const transactions = await this.aggregate(query)
 		return  transactions
 	}

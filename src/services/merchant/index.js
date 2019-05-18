@@ -18,7 +18,6 @@ app.post( '/get-by-location', async ( req, res ) => {
 		 let merchants = []
 		 result.map((value) => {
 			 merchants.push({
-				 id: value._id,
 				 merchantCode: value.merchantCode,
 				 merchantName: value.merchantName,
 				 address: value.address

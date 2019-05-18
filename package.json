@@ -53,6 +53,7 @@
     "emailjs": "^2.0.0",
     "express-sessions": "^1.0.6",
     "express-useragent": "^1.0.12",
+    "fakerator": "^0.3.0",
     "feathers-mongodb": "^3.0.1",
     "file-type": "^7.7.1",
     "generate-password": "^1.4.1",

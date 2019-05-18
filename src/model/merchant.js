@@ -112,7 +112,7 @@ export class merchantClass{
 	}
 
 	static async findByMerchantCode ( merchantCode ) {
-		return this.findOne({merchantCode}).exec()
+		return this.findOne(merchantCode)
 	}
 
   static async updateMerchant ( merchantID, merchant ) {

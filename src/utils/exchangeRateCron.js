@@ -25,6 +25,8 @@ export const updateExchangeRate = async (currency) => {
   currencies.map(async currency => {
     return await getRates(currency).then(resp => {
       var baseCountryCode = ''
+      var baseCurrencyName = ''
+      var baseCurrencySymbol = ''
       var rateCountryCode = ''
       var rateCurrencyName = ''
       var rateCurrencySymbol = ''
@@ -33,7 +35,12 @@ export const updateExchangeRate = async (currency) => {
       if (baseCurrencyCountry[0].hasOwnProperty('countryCode')) {
         baseCountryCode = baseCurrencyCountry[0].countryCode
       }
-
+      if (baseCurrencyCountry[0].hasOwnProperty('currencyName')) {
+        baseCurrencyName = baseCurrencyCountry[0].currencyName
+      }
+      if (baseCurrencyCountry[0].hasOwnProperty('currencySymbol')) {
+        baseCurrencySymbol = baseCurrencyCountry[0].currencySymbol
+      }
       Object.keys(resp.data.rates).map(function(key){
         // console.log(resp.data.rates[key])
         // console.log(key)
@@ -45,7 +52,7 @@ export const updateExchangeRate = async (currency) => {
         if (currencyCountry[0].hasOwnProperty('currencyName')) {
           rateCurrencyName = currencyCountry[0].currencyName
         }
-        if (currencyCountry[0].hasOwnProperty('currencyName')) {
+        if (currencyCountry[0].hasOwnProperty('currencySymbol')) {
           rateCurrencySymbol = currencyCountry[0].currencySymbol
         }
         // console.log(rateCountryCode)
@@ -59,6 +66,8 @@ export const updateExchangeRate = async (currency) => {
         })
       })
       resp.data.countryCode = baseCountryCode
+      resp.data.currencyName = baseCurrencyName
+      resp.data.currencySymbol = baseCurrencySymbol
       resp.data.rates = rates
 
       // console.log(resp.data)

@@ -12,9 +12,8 @@ const response = ( status, data, res ) => {
 }
 
 app.get( '/', async ( req, res ) => {
-	console.log(req.useragent);
-	console.log(req.session);
-  console.log(process.env)
+	// console.log(req.useragent);
+	//console.log(req.session);
 	try {
     const result = await getExchangeRate()
 		response( 200, result, res )

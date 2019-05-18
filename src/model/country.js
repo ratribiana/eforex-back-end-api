@@ -34,11 +34,13 @@ const schema = new Schema({
 	capital: {
 		type      : String,
 		searchable: true,
+		lowercase : true,
 		default   : ''
 	},
 	region: {
 		type      : String,
 		searchable: true,
+		lowercase : true,
 		default   : ''
 	},
 	timezones: {
@@ -48,7 +50,6 @@ const schema = new Schema({
 	},
 	currencyCode: {
 		type      : String,
-		required  : true,
 		index     : true,
 		searchable: true,
 	},

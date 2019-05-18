@@ -3,6 +3,26 @@ import mongoose from 'mongoose'
 const {Schema} = mongoose
 mongoose.plugin( require( 'mongoose-regex-search' ) )
 
+const cities = new Schema({
+	name: {
+		type      : String,
+		required  : true,
+		index     : true,
+		searchable: true,
+		lowercase : true
+	},
+	cityCode: {
+		type      : String,
+		index     : true,
+		searchable: true,
+		default   : ''
+	},
+	stateCode: {
+		type      : String,
+		default   : ''
+	}
+})
+
 const schema = new Schema({
 	name: {
 		type      : String,
@@ -25,7 +45,7 @@ const schema = new Schema({
 		searchable: true
 	},
   cities: {
-		type      : Array,
+		type      : [cities],
     default: []
 	},
   region: {

@@ -12,14 +12,15 @@ export const registerSerializer = ( register ) => ({
 })
 
 export const registerGuestSerializer = ( register ) => ({
+	username    : register.username,
 	email       : register.email,
 	mobile      : register.mobile,
 	personalInfo: {
-		firstname: register.firstname,
-		lastname : register.lastname,
+		firstname : register.firstname,
+		lastname  : register.lastname,
 	},
-	IDType: register.idType,
-	IDNumber: register.idNumber,
+	IDType      : register.idType,
+	IDNumber    : register.idNumber,
 })
 
 export const userSearchSerializer = ( user ) => ({
@@ -68,7 +69,7 @@ export const nonAdminProfileSerializer = ( profile ) => ({
 export const transactionSerializer = ( transaction ) => ({
 	userID					  : transaction.userID,
 	transactionID		  : transaction.transactionID,
-	merchantID			  : transaction.merchantID,
+	merchantCode			: transaction.merchantCode,
 	ipAddress				  : transaction.ipAddress,
 	amount					  : transaction.amount,
 	baseCurrency      : transaction.baseCurrency,

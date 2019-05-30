@@ -13,6 +13,7 @@ export const registerSerializer = ( register ) => ({
 
 export const registerGuestSerializer = ( register ) => ({
 	username    : register.username,
+	password    : register.password,
 	email       : register.email,
 	mobile      : register.mobile,
 	personalInfo: {
@@ -20,7 +21,7 @@ export const registerGuestSerializer = ( register ) => ({
 		lastname  : register.lastname,
 	},
 	IDType      : register.idType,
-	IDNumber    : register.idNumber,
+	IDNumber    : register.idNumber
 })
 
 export const userSearchSerializer = ( user ) => ({

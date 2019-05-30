@@ -64,6 +64,14 @@ const schema = new Schema({
     required: true,
 		searchable: true
 	},
+  isVerified: {
+    type   : Boolean,
+		default: false
+  },
+  dateVerified: {
+    type   : Date,
+		default: null
+  },
   isDeleted: {
     type   : Boolean,
 		default: false

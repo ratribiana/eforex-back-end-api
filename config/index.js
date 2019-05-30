@@ -68,10 +68,16 @@ var cfg = config({
         default  : '99294186737032fedadsca13fsdfhfdhfj',
         required : true,
     },
+    otpSecret : {
+        env      : 'OTP_SECRET',
+        type     : 'string',
+        default  : 'EFKSJEJDNZXSZNEKUSNHDGCQARJKCNSHFE',
+        required : true,
+    },
     feDomain : {
         env      : 'FE_DOMAIN',
         type     : 'string',
-        default  : 'localhost',
+        default  : 'http://zwap.herokuapp.com',
         required : true,
     },
     maxSuggetions : {
@@ -128,11 +134,65 @@ var cfg = config({
         default  : 'ratribiana@gmail.com',
         required : true,
     },
-    companyPhone : {
-        env      : 'COMPANY_PHONE',
+    companyMobile : {
+        env      : 'COMPANY_MOBILE',
         type     : 'string',
         default  : '+639156914381',
         required : true,
+    },
+    sendgrid_api_key : {
+      env      : 'SENDGRID_API_KEY',
+      type     : 'string',
+      default  : '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',
+      required : true
+    },
+    sendgrid_username : {
+      env      : 'SENDGRID_USERNAME',
+      type     : 'string',
+      default  : 'ratribiana@gmail.com',
+      required : true
+    },
+    sendgrid_password : {
+      env      : 'SENDGRID_PASSWORD',
+      type     : 'string',
+      default  : 'CGIh-QwA.0S8jHeo',
+      required : true
+    },
+    twilio_account_SID: {
+      env      : 'TWILIO_ACCOUNT_SID',
+      type     : 'string',
+      default  : 'AC3d771c6cc3a387240bb5bf989d7ce379',
+      required : true
+    },
+    twilio_auth_token: {
+      env      : 'TWILIO_AUTH_TOKEN',
+      type     : 'string',
+      default  : '1ea70019c5bdbafdd0b93724238095c2',
+      required : true
+    },
+    twilio_test_account_SID: {
+      env      : 'TWILIO_TEST_ACCOUNT_SID',
+      type     : 'string',
+      default  : 'AC6cc384eac67de97eb35c05d1287153b0',
+      required : true
+    },
+    twilio_test_auth_token: {
+      env      : 'TWILIO_AUTH_TOKEN',
+      type     : 'string',
+      default  : 'e771c5425de1af92dde6b883f2437a53',
+      required : true
+    },
+    nexmo_api_key: {
+      env      : 'MEXMO_API_KEY',
+      type     : 'string',
+      default  : '963b9d02',
+      required : true
+    },
+    nexmo_api_secret: {
+      env      : 'NEXMO_API_SECRET',
+      type     : 'string',
+      default  : '6D1cnU10QZR7Qd8x',
+      required : true
     },
     env : {
       env      : 'NODE_ENV',

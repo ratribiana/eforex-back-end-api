@@ -49,3 +49,9 @@ export const formatTransactionID = (merchantID, lastCount) => {
 
   return transactionID
 }
+
+export const getFutureDateTimeMins = ( addedMins ) => {
+  var now = new Date()
+  now.setMinutes(now.getMinutes() + addedMins) // timestamp
+  return new Date(now)
+}

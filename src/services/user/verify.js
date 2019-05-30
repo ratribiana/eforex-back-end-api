@@ -26,12 +26,9 @@ app.get( '/:token', async ( req, res ) => {
 		  			{
 		  				_id: payload._id
 		  			},
-		  			{verified: Date.now()},
+		  			{verified: Date.now(), isVerified: true},
 		  			{new: true}
 		  		)
-					if ( updatedUser.sponsorName && updatedUser.sponsorName.id ) {
-						const getSponsor = await user.findOne({_id: updatedUser.sponsorName.id})
-					}
 					updatedUser = profileSerializer( updatedUser )
 					res.status( 200 ).send( JSON.stringify( updatedUser ) )
 				} else {

@@ -158,8 +158,18 @@ const schema = new Schema({
 		default: null
 	},
 	latestOtp: {
-		type    : String,
-		default : '',
+		otp: {
+			type    : String,
+			default : null
+		},
+		created: {
+			type   : Date,
+			default: Date.now
+		},
+		valid_until: {
+			type   : Date,
+			default : null
+		}
 	},
 	IDType: {
 		type    : String,
@@ -426,6 +436,16 @@ export class UserClass {
 		  {transactionPassword: hash( newPincode, PASSWORD_SALT )},
 		  {new: true}
 		).exec()
+	}
+
+	static async getLastOTP ( search ) {
+		const user = await this.findOne(search)
+
+		if ( user ){
+			return user.latestOtp
+		} else {
+			throw new Error( 'invalid_credentials' )
+		}
 	}
 }
 schema.loadClass( UserClass )

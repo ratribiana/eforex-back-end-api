@@ -119,7 +119,7 @@ app.put('/:id', async ( req, res ) => {
 	}
 
 	const updateMerchant = await merchant.updateMerchant(id, merchantInfo)
-	
+
 	try {
 
 		 if ( updateMerchant ) {

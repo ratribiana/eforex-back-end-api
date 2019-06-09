@@ -169,7 +169,8 @@ app.post( '/guest', async ( req, res ) => {
 					isSignup          : isSignup,
 					token             : token,
 					qrCodeUrl         : qrCodeUrl.cloudImageUrl,
-					barcCodeUrl       : `${config.host}:${config.port}/barcode?bcid=code128&text=${transactionID}&height=10&includetext&paddingwidth=3&paddingheight=3`,
+					barcCodeUrl       : `https://zwap.herokuapp.com/barcode?bcid=code128&text=${transactionID}&height=10&includetext&paddingwidth=3&paddingheight=3`
+					// barcCodeUrl       : `${config.host}:${config.port}/barcode?bcid=code128&text=${transactionID}&height=10&includetext&paddingwidth=3&paddingheight=3`,
 					amount            : newGuestTransaction.amount,
 					baseCurrency      : newGuestTransaction.baseCurrency,
 				  convertedAmount   : newGuestTransaction.convertedAmount,

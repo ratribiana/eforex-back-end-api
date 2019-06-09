@@ -16,7 +16,7 @@
     "npm": ">= 3.0.0"
   },
   "scripts": {
-    "build": "npm run clean && babel -d ./build ./src -s && mkdirp ./build/public/files",
+    "build": "npm run clean && babel src --out-dir dist --source-maps inline --copy-files && mkdirp ./build/public/files",
     "clean": "rm -rf build && mkdir build",
     "clearDB": "babel-node src/clearDB.js --exec",
     "e2e-test": "cross-env NODE_ENV=test npm run re-seed && jest test/end-to-end-test",

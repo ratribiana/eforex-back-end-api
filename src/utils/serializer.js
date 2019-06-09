@@ -2,11 +2,14 @@
 export const registerSerializer = ( register ) => ({
 	username           : register.username,
 	password           : register.password,
-	transactionPassword: register.transactionPassword,
 	email              : register.email,
+	mobile      : register.mobile,
 	personalInfo: {
 		firstname: register.firstname,
-		lastname : register.lastname,
+		middlename: register.middlename,
+		lastname  : register.lastname,
+		suffix    : register.suffix,
+		dateOfBirth: register.dateOfBirth
 	},
 	verified		 : register.verified
 })
@@ -18,7 +21,10 @@ export const registerGuestSerializer = ( register ) => ({
 	mobile      : register.mobile,
 	personalInfo: {
 		firstname : register.firstname,
+		middlename: register.middlename,
 		lastname  : register.lastname,
+		suffix    : register.suffix,
+		dateOfBirth: register.dateOfBirth
 	},
 	IDType      : register.idType,
 	IDNumber    : register.idNumber

@@ -9,8 +9,8 @@ export const sendMail = async (data) => {
 
   const msg = {
     to: data.receiver_email,
-    from: 'donotreply@staffup.co',
-    subject: 'Welcome to Zwappy ' + data.firstname +' '+ data.lastname,
+    from: 'donotreply@zwappy.asia',
+    subject: 'Welcome to Zwappy ' + data.firstname +' '+ data.lastname +' '+ data.suffix,
     html: data.html_content,
   }
 

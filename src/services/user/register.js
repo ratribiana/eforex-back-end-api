@@ -7,6 +7,10 @@ import {logger} from 'utils/logger'
 import {user} from 'model/user'
 import {encoder} from 'utils/jwt'
 import {siteStatus} from 'utils/maintenance'
+import {upload, fileUploadtoCloud} from 'utils/uploader'
+import {generateQR} from 'utils/qrCodeGenerator'
+import {generateBarcode} from 'utils/barcodeGenerator'
+
 
 const app = express( feathers() )
 
@@ -95,6 +99,30 @@ app.post( '/guest', async ( req, res ) => {
 		register( res, 400, {error: 'error_saving_data', code: e.code})
 		logger( e )
 	}
+})
+
+app.post( '/upload', upload.single('photoVerification'), async ( req, res ) => {
+	// console.log(req)
+	// const qrCodeUrl = await generateQR('test')
+	// const barcodeUrl = await generateBarcode('test')
+	// console.log(qrCodeUrl)
+	// console.log(barcodeUrl)
+	// fileUpload(req)
+	var data = {
+		_id: 'sd4s5d466s5d46s5d4s5d4',
+		destination: 'user/verifications/photo/',
+    firstname: 'Robert Anthony',
+		lastname: 'Tribiana'
+	}
+
+	const file = req.file
+	await fileUploadtoCloud(file, data).then(uploadedFile => {
+		console.log(uploadedFile)
+		if (uploadedFile) {
+			register( res, 200, {message: 'Uploading File Success'})
+		}
+	})
+
 })
 
 export default app

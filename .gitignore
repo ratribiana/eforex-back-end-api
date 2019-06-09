@@ -116,4 +116,4 @@ lib/
 data/
 
 package-lock.json
-src/public/files/*
+src/public/files/qrcode/*

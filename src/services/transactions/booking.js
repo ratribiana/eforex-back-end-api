@@ -18,9 +18,10 @@ import {generateOTP, verifyOTP} from 'utils/passwords'
 import {createSMS} from 'utils/smsSettings'
 import {sendMail} from 'utils/sendgrid'
 import {getMailTemplateGuestTransaction} from 'utils/mailTemplates'
+import {generateQRCodeImage} from 'utils/qrCodeGenerator'
+import {generateBarcode} from 'utils/barcodeGenerator'
 
-
-import fakerator from 'fakerator'
+// import fakerator from 'fakerator'
 
 const app = express( feathers() )
 
@@ -39,6 +40,8 @@ const transact = ( res, status, data ) => {
 
 app.post( '/guest', async ( req, res ) => {
   var transactions = req.body.transaction
+	var userData = req.body.user
+	var isSignup = userData.isSignup == 'on' ? true : false
   var clientIP = req.clientIp
 	var ifEmailExist = false
   var ifMobileExist = false
@@ -54,10 +57,11 @@ app.post( '/guest', async ( req, res ) => {
 		strict: true
 	});
 
-	req.body.user.username = fakerator().internet.userName(req.body.user.firstname, req.body.user.lastname)
-	req.body.user.password = userPassword
+  // not required to create username and password for the meantime
+	// req.body.user.username = fakerator().internet.userName(req.body.user.firstname, req.body.user.lastname)
+	// req.body.user.password = userPassword
 
-  const registerGuestUser = registerGuestSerializer(req.body.user)
+  const registerGuestUser = registerGuestSerializer( userData )
 	const newGuestTransaction = transactionSerializer( transactions )
   const ipAddress = await getIPAddress()
 
@@ -122,17 +126,17 @@ app.post( '/guest', async ( req, res ) => {
     if (newUser && newTransaction) {
 			const userOTP = await generateOTP()
 			const otpDetails = {
-				_id: newUser,
+				_id      : newUser,
 				latestOtp: {
-					otp: userOTP,
+					otp        : userOTP,
 				  valid_until: getFutureDateTimeMins( 10 ),
-					created: new Date()
+					created    : new Date()
 				}
 			}
 			console.log(userOTP)
 			const updateUserOTP = await user.updateUser({...otpDetails})
 			if (updateUserOTP) {
-				const message = 'Your OTP to verify your transaction is ' + userOTP
+				const message = 'Your verification code is' + userOTP + '. Use this to verify your transaction. Do not share this to others '
 				// createSMS(message, registerGuestUser.mobile)
 
 				const { _id, email, personalInfo, username } = newUser
@@ -140,19 +144,45 @@ app.post( '/guest', async ( req, res ) => {
 				const tokenPayload = { email, _id, userOTP, transactionID }
 				token = encode( tokenPayload )
 
-				const mailContent = {
+				// temporary removed sending username and password to user
+				/*const mailContent = {
 					firstname: personalInfo.firstname,
 					lastname: personalInfo.lastname,
+					suffix: personalInfo.suffix || '',
 					token: token,
 					username: username,
 					password: userPassword
+				}*/
+
+				const qrCodeData = {
+					firstname: personalInfo.firstname,
+					lastname : personalInfo.lastname,
+					_id      : _id.toString()
+				}
+
+				const qrCodeUrl = await generateQRCodeImage(transactionID, qrCodeData)
+
+
+				const mailContent = {
+					firstname         : personalInfo.firstname,
+					transactionID     : transactionID,
+					isSignup          : isSignup,
+					token             : token,
+					qrCodeUrl         : qrCodeUrl.cloudImageUrl,
+					barcCodeUrl       : `${config.host}:${config.port}/barcode?bcid=code128&text=${transactionID}&height=10&includetext&paddingwidth=3&paddingheight=3`,
+					amount            : newGuestTransaction.amount,
+					baseCurrency      : newGuestTransaction.baseCurrency,
+				  convertedAmount   : newGuestTransaction.convertedAmount,
+				  convertToCurrency : newGuestTransaction.convertToCurrency,
+
 				}
 
 				const mailData = {
 					receiver_email: email,
-					firstname: personalInfo.firstname,
-					lastname: personalInfo.lastname,
-					html_content: getMailTemplateGuestTransaction(mailContent)
+					firstname     : personalInfo.firstname,
+					lastname      : personalInfo.lastname,
+					suffix        : personalInfo.suffix || '',
+					html_content  : getMailTemplateGuestTransaction(mailContent)
 				}
 
 				sendMail(mailData)

@@ -55,14 +55,24 @@ const schema = new Schema({
 			type      : String,
 			index     : true,
 			searchable: true,
-			required: true,
+			required  : true,
+			default   : ''
+		},
+		middlename: {
+			type      : String,
+			index     : true,
+			searchable: true,
 			default   : ''
 		},
 		lastname: {
 			type      : String,
 			index     : true,
 			searchable: true,
-			required: true,
+			required  : true,
+			default   : ''
+		},
+		suffix: {
+			type      : String,
 			default   : ''
 		},
 		gender: {
@@ -181,6 +191,18 @@ const schema = new Schema({
 		default : '',
 		searchable: true
 	},
+	isGuest: {
+		type   : Boolean,
+		default: true
+	},
+	verificationImage: {
+		type    : String,
+		default : ''
+	},
+	verificationImageFilenameOld: {
+		type    : String,
+		default : ''
+	},
 	security: {
 		secret: {
 			type   : String,
@@ -244,32 +266,58 @@ const schema = new Schema({
 		submitted: {
 			type: Date
 		},
-		passport: new Schema({
-			details: {
-				type   : String,
-				default: null
+		documentType: new Schema({
+			IDType: {
+				type    : String,
+				default : '',
+				searchable: true
 			},
-			status: {
-				type   : String,
-				default: null
-			}
-		}),
-		address: new Schema({
-			details: {
-				type   : String,
-				default: null
+			IDNumber: {
+				type    : String,
+				default : '',
+				searchable: true
 			},
-			status: {
+			image: {
+				type    : String,
+				default : '',
+			},
+			addressLine1: {
+				type      : String,
+				index     : true,
+				searchable: true,
+				default   : ''
+			},
+			addressLine2: {
 				type   : String,
-				default: null
+				default: ''
+			},
+			zipCode: {
+				type   : Number,
+				default: 0
+			},
+			country: {
+				type      : String,
+				required  : true,
+				index     : true,
+				searchable: true,
+				lowercase : true,
+				default   : ''
+			},
+			state: {
+				type      : String,
+				index     : true,
+				searchable: true,
+				default   : ''
+			},
+			city: {
+				type      : String,
+				index     : true,
+				searchable: true,
+				default   : ''
 			}
 		}),
 		status: new Schema({
 			noIssue: {
-				type   : Boolean,
-				default: false
-			},
-			isMoreThanTreeAccounts: {
 				type   : Boolean,
 				default: false
 			},
@@ -308,6 +356,10 @@ const schema = new Schema({
 			isNotOnApprovedList: {
 				type   : Boolean,
 				default: false
+			},
+			isExpired: {
+				type   : Boolean,
+				default: false,
 			},
 			other: {
 				type   : Boolean,

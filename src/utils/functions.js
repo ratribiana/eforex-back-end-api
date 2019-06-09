@@ -1,6 +1,7 @@
 const generator = require('generate-password');
 import {logger} from 'utils/logger'
 import axios from 'axios'
+import dateFormat from 'dateformat'
 
 export const getIPAddress = (str) => {
   return new Promise((resolve, reject) => {
@@ -54,4 +55,14 @@ export const getFutureDateTimeMins = ( addedMins ) => {
   var now = new Date()
   now.setMinutes(now.getMinutes() + addedMins) // timestamp
   return new Date(now)
+}
+
+export const createFileName = ( userData, text = null ) => {
+  const fname = userData.firstname.split(' ').join('-')
+  const lastname = userData.lastname.split(' ').join('-')
+  if (text) {
+    return text + dateFormat(new Date, 'yyyymmddHHMMss') + '-' + fname + '-' + lastname + '.png'
+  } else {
+    return dateFormat(new Date, 'yyyymmddHHMMss') + '-' + fname + '-' + lastname + '.png'
+  }
 }

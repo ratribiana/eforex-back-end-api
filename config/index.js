@@ -194,6 +194,11 @@ var cfg = config({
       default  : '6D1cnU10QZR7Qd8x',
       required : true
     },
+    google_storage_url: {
+      env      : 'GOOGLE_STORAGE_URL',
+      type     : 'string',
+      default  : 'https://storage.googleapis.com/zwappy-622e8.appspot.com/'
+    },
     env : {
       env      : 'NODE_ENV',
       type     : 'enum',

@@ -40,6 +40,7 @@ app.use( configuration )
 app.get('/', (req, res) => {
   res.status(200).json({ message: "Api is working good"}).end();
 });
+app.use('/assets', express.static('src/public/files/'));
 
 app.use( helmet() )
 app.use( compress() )
